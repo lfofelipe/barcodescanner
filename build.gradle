@@ -26,3 +26,28 @@ allprojects {
         isLibrary = false
     }
 }
+
+subprojects {
+    afterEvaluate { Project project ->
+        ext.pluginContainer = project.getPlugins()
+        if(ext.pluginContainer.hasPlugin("com.android.application") || ext.pluginContainer.hasPlugin("com.android.library")) {
+            android {
+                compileSdkVersion versions.compile_sdk
+                buildToolsVersion versions.build_tools
+
+                android {
+                    lintOptions {
+                        abortOnError false
+                    }
+                }
+
+                defaultConfig {
+                    minSdkVersion versions.min_sdk
+                    targetSdkVersion versions.target_sdk
+                    versionCode 1913
+                    versionName "1.9.13"
+                }
+            }
+        }
+    }
+}
